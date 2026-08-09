@@ -23,16 +23,22 @@ ENV PORT=8080
 ENV HOSTNAME=0.0.0.0
 
 RUN groupadd --system --gid 1001 nodejs \
-  && useradd --system --uid 1001 --gid nodejs nextjs
+  && useradd --system --uid 1001 --gid nodejs nextjs \
+  && apt-get update \
+  && apt-get install -y --no-install-recommends curl \
+  && rm -rf /var/lib/apt/lists/*
 
 COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --chown=nextjs:nodejs scripts/docker-start.cjs ./docker-start.cjs
+COPY --chown=nextjs:nodejs scripts/docker-health.cjs ./docker-health.cjs
 
 USER nextjs
 EXPOSE 8080
 
-# No Docker HEALTHCHECK here — Timeweb uses "Путь проверки состояния".
-# Set that path in the panel to: /api/health
+# Timeweb waits for Docker HEALTHCHECK. Use Node (always present), not wget.
+HEALTHCHECK --interval=5s --timeout=5s --start-period=20s --retries=12 \
+  CMD ["node", "docker-health.cjs"]
+
 CMD ["node", "docker-start.cjs"]
