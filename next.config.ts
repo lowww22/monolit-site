@@ -1,8 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Compact production bundle for Docker / Timeweb Apps / VPS
   output: "standalone",
+  // Avoid native sharp issues on small App Platform VMs
+  images: {
+    unoptimized: true,
+  },
 };
 
 export default nextConfig;
