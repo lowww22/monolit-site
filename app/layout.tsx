@@ -105,6 +105,8 @@ const jsonLd = {
     opens: "08:00",
     closes: "18:00",
   },
+  priceRange: "$$",
+};
 
 export default function RootLayout({
   children,
