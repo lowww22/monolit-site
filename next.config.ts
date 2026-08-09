@@ -2,9 +2,16 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   output: "standalone",
-  // Avoid native sharp issues on small App Platform VMs
   images: {
     unoptimized: true,
+  },
+  async rewrites() {
+    return [
+      {
+        source: "/google53220b585c70e120.html",
+        destination: "/api/google-site-verification",
+      },
+    ];
   },
 };
 
