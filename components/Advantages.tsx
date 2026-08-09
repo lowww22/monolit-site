@@ -1,14 +1,14 @@
 import {
   Award,
-  Beaker,
   Factory,
+  FileCheck,
   ShieldCheck,
   Truck,
   Users,
 } from "lucide-react";
 import { site } from "@/lib/site";
 
-const icons = [Award, Users, ShieldCheck, Beaker, Truck, Factory];
+const icons = [Factory, Users, ShieldCheck, FileCheck, Truck, Award];
 
 export default function Advantages() {
   return (
@@ -16,11 +16,11 @@ export default function Advantages() {
       <div className="container-x">
         <p className="eyebrow">Почему Монолит</p>
         <h2 className="display mt-3 max-w-2xl text-3xl text-ink sm:text-4xl md:text-5xl">
-          Достоинства, на которых держится доверие региона
+          Достоинства, на которых держится доверие района
         </h2>
         <p className="mt-4 max-w-2xl text-muted sm:text-lg">
           Мы не просто поставляем бетон — обеспечиваем стройки Глазова и Игры
-          стабильным качеством, сроками и лабораторным контролем.
+          стабильным качеством, сроками и полным циклом производства.
         </p>
 
         <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">

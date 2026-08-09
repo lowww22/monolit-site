@@ -1,4 +1,5 @@
 User-Agent: *
 Allow: /
 
-Sitemap: /sitemap.xml
+Sitemap: https://lowww22-monolit-site-c958.twc1.net/sitemap.xml
+Host: https://lowww22-monolit-site-c958.twc1.net

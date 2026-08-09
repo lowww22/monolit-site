@@ -1,6 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Manrope, Oswald } from "next/font/google";
 import "./globals.css";
+import { site } from "@/lib/site";
+
+const SITE_URL = "https://lowww22-monolit-site-c958.twc1.net";
 
 const display = Oswald({
   subsets: ["latin", "cyrillic"],
@@ -17,22 +20,39 @@ const sans = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "ООО «Монолит» — бетон в Глазове и Игре",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "Купить бетон в Глазове — ООО «Монолит» | завод Глазовского района",
+    template: "%s | Монолит Глазов",
+  },
   description:
-    "Производство и доставка товарного бетона в Глазове и Игре. Более 20 лет на рынке, контроль по ГОСТ, собственная лаборатория. Около 80% рынка региона.",
+    "Купить товарный бетон и раствор в Глазове и Игре. ООО «Монолит» — крупнейший бетонный завод Глазовского района. ГОСТ, доставка, более 20 лет на рынке.",
   keywords: [
     "бетон Глазов",
+    "купить бетон Глазов",
+    "монолит Глазов бетон",
+    "товарный бетон Глазов",
     "бетон Игра",
-    "товарный бетон",
-    "ООО Монолит",
+    "бетонный завод Глазовский район",
     "доставка бетона Удмуртия",
+    "раствор Глазов",
+    "ООО Монолит",
   ],
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
-    title: "ООО «Монолит» — бетон в Глазове и Игре",
+    title: "Купить бетон в Глазове — ООО «Монолит»",
     description:
-      "Товарный бетон В7,5–В40 (М100–М500), строительный раствор. ГОСТ, лаборатория, доставка по Удмуртии.",
+      "Крупнейший бетонный завод Глазовского района. Товарный бетон В7,5–В40, раствор, доставка по Удмуртии.",
+    url: SITE_URL,
     locale: "ru_RU",
     type: "website",
+    siteName: "ООО Монолит",
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 
@@ -42,6 +62,38 @@ export const viewport: Viewport = {
   themeColor: "#0f1113",
 };
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "HomeAndConstructionBusiness",
+  name: site.company.legalName,
+  alternateName: "Монолит Глазов",
+  description:
+    "Крупнейший бетонный завод Глазовского района. Производство и доставка товарного бетона и раствора.",
+  url: SITE_URL,
+  telephone: ["+79124645460", "+79956445459"],
+  email: site.contacts.email,
+  image: `${SITE_URL}/images/plant.jpg`,
+  address: [
+    {
+      "@type": "PostalAddress",
+      streetAddress: "ул. Юкаменская, 29",
+      addressLocality: "Глазов",
+      addressRegion: "Удмуртская Республика",
+      addressCountry: "RU",
+    },
+    {
+      "@type": "PostalAddress",
+      streetAddress: "ул. Производственная, 4, д. Сундур",
+      addressLocality: "Игринский район",
+      addressRegion: "Удмуртская Республика",
+      addressCountry: "RU",
+    },
+  ],
+  areaServed: ["Глазов", "Игра", "Глазовский район", "Удмуртия"],
+  openingHours: "Mo-Su 08:00-18:00",
+  priceRange: "$$",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -49,7 +101,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru" className={`${display.variable} ${sans.variable}`}>
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        {children}
+      </body>
     </html>
   );
 }
