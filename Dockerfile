@@ -16,10 +16,13 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV PORT=8080
+# Do not rely on ENV HOSTNAME alone — Docker overwrites it with the container name,
+# and Next.js standalone binds to process.env.HOSTNAME.
 ENV HOSTNAME=0.0.0.0
 
 RUN addgroup --system --gid 1001 nodejs \
-  && adduser --system --uid 1001 nextjs
+  && adduser --system --uid 1001 nextjs \
+  && apk add --no-cache wget
 
 COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
@@ -27,4 +30,10 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 USER nextjs
 EXPOSE 8080
-CMD ["node", "server.js"]
+
+# Longer start-period: first boot / cold start on small VMs can be slow.
+HEALTHCHECK --interval=10s --timeout=5s --start-period=60s --retries=6 \
+  CMD wget -qO- http://127.0.0.1:8080/api/health >/dev/null || exit 1
+
+# Force bind address so platform healthchecks on 127.0.0.1/8080 succeed.
+CMD ["sh", "-c", "HOSTNAME=0.0.0.0 PORT=${PORT:-8080} node server.js"]
