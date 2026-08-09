@@ -14,7 +14,8 @@ export default function About() {
           <p className="mt-5 text-base leading-relaxed text-muted sm:text-lg">
             Более двух десятилетий мы производим и доставляем товарный бетон в
             Удмуртии. ООО «Монолит» — {site.company.position}: стабильное
-            качество по ГОСТ и дисциплина поставок.
+            качество по ГОСТ, производительность {site.company.capacity}, режим
+            работы {site.contacts.hours.toLowerCase()}.
           </p>
           <p className="mt-4 text-base leading-relaxed text-muted sm:text-lg">
             Работаем с частными заказчиками, подрядчиками и промышленными

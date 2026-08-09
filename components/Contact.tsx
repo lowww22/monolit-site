@@ -73,7 +73,8 @@ export default function Contact() {
           <div className="bg-panel p-6 text-ink sm:p-8 md:p-12">
             <h3 className="text-2xl font-semibold">Заявка на звонок</h3>
             <p className="mt-2 text-muted">
-              Оставьте контакты — перезвоним в рабочее время 8:00–18:00.
+              Оставьте контакты — перезвоним в рабочее время{" "}
+              {site.contacts.hours.replace("Ежедневно ", "")}.
             </p>
             <div className="mt-6">
               <ContactForm />
