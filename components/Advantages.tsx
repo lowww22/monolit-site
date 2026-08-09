@@ -1,14 +1,14 @@
 import {
   Award,
   Factory,
-  FileCheck,
   ShieldCheck,
+  TrainFront,
   Truck,
   Users,
 } from "lucide-react";
 import { site } from "@/lib/site";
 
-const icons = [Factory, Users, ShieldCheck, FileCheck, Truck, Award];
+const icons = [Factory, Users, ShieldCheck, TrainFront, Truck, Award];
 
 export default function Advantages() {
   return (
