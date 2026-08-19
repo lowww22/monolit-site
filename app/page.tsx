@@ -3,12 +3,14 @@ import Hero from "@/components/Hero";
 import Advantages from "@/components/Advantages";
 import Catalog from "@/components/Catalog";
 import Services from "@/components/Services";
+import ProductsBlocks from "@/components/ProductsBlocks";
 import Production from "@/components/Production";
 import Delivery from "@/components/Delivery";
 import Objects from "@/components/Objects";
 import About from "@/components/About";
 import Calculator from "@/components/Calculator";
 import Contact from "@/components/Contact";
+import Cement from "@/components/Cement";
 import Footer from "@/components/Footer";
 import FloatingCall from "@/components/FloatingCall";
 
@@ -26,9 +28,11 @@ export default function Home() {
 
       <main>
         <Hero />
+        <ProductsBlocks />
         <Advantages />
         <Catalog />
         <Services />
+        <Cement />
         <Production />
         <Delivery />
         <Objects />
