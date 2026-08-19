@@ -30,12 +30,6 @@ export default function Contact() {
                   >
                     {site.contacts.phoneDisplay}
                   </a>
-                  <a
-                    href={site.contacts.phoneAltHref}
-                    className="block text-lg font-semibold hover:text-orange-300"
-                  >
-                    {site.contacts.phoneAltDisplay}
-                  </a>
                 </div>
               </li>
 

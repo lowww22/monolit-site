@@ -68,11 +68,6 @@ export default function Footer() {
               </a>
             </li>
             <li>
-              <a href={site.contacts.phoneAltHref} className="hover:text-white">
-                {site.contacts.phoneAltDisplay}
-              </a>
-            </li>
-            <li>
               <a href={site.contacts.emailHref} className="hover:text-white">
                 {site.contacts.email}
               </a>

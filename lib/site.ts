@@ -11,10 +11,8 @@ export const site = {
   },
 
   contacts: {
-    phoneDisplay: '+7 (912) 464-54-60',
-    phoneHref: 'tel:+79124645460',
-    phoneAltDisplay: '+7 (995) 644-54-59',
-    phoneAltHref: 'tel:+79956445459',
+    phoneDisplay: '+7 (912) 850-17-11',
+    phoneHref: 'tel:+79128501711',
     email: 'betonvigre@mail.ru',
     emailHref: 'mailto:betonvigre@mail.ru',
     addressGlazov: 'г. Глазов, ул. Юкаменская, 29',
