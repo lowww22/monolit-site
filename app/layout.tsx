@@ -74,7 +74,7 @@ const jsonLd = {
   description:
     "Крупнейший бетонный завод Глазовского района. Производительность до 200 м³/час. Производство и доставка товарного бетона и раствора.",
   url: SITE_URL,
-  telephone: ["+79124645460", "+79956445459"],
+  telephone: ["+79128501711"],
   email: site.contacts.email,
   image: `${SITE_URL}/images/plant.jpg`,
   address: [
