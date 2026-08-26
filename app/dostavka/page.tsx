@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
+import Link from 'next/link';
 import { MapPin } from 'lucide-react';
+import { cities } from '@/lib/cities';
 import PageHeader from '@/components/PageHeader';
 import CtaBand from '@/components/CtaBand';
 import FaqSection from '@/components/FaqSection';
@@ -115,6 +117,42 @@ export default function DostavkaPage() {
               </article>
             ))}
           </div>
+
+          <h3 className="display mt-12 text-2xl text-ink sm:text-3xl">
+            Направления с отдельными условиями
+          </h3>
+          <p className="mt-3 max-w-3xl text-muted">
+            По этим населённым пунктам расписали, откуда возим и что учесть
+            при заказе.
+          </p>
+          <ul className="mt-6 flex flex-wrap gap-3">
+            <li>
+              <Link
+                href="/glazov"
+                className="inline-block border border-line bg-panel px-4 py-2.5 font-medium text-ink transition hover:border-accent hover:text-accent"
+              >
+                Бетон в Глазове
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/igra"
+                className="inline-block border border-line bg-panel px-4 py-2.5 font-medium text-ink transition hover:border-accent hover:text-accent"
+              >
+                Бетон в Игре
+              </Link>
+            </li>
+            {cities.map((c) => (
+              <li key={c.slug}>
+                <Link
+                  href={`/dostavka/${c.slug}`}
+                  className="inline-block border border-line bg-panel px-4 py-2.5 font-medium text-ink transition hover:border-accent hover:text-accent"
+                >
+                  Бетон {c.inCity}
+                </Link>
+              </li>
+            ))}
+          </ul>
 
           <div className="mt-10">
             <CtaBand text="Назовите адрес объекта — рассчитаем доставку и согласуем время." />

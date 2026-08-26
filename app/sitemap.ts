@@ -2,6 +2,7 @@ import type { MetadataRoute } from 'next';
 import { SITE_URL } from '@/lib/seo';
 import { concrete, mortar } from '@/lib/catalog';
 import { articles } from '@/lib/articles';
+import { cities } from '@/lib/cities';
 
 /** Карта сайта собирается один раз при сборке */
 export const dynamic = 'force-static';
@@ -49,6 +50,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
     ...mortar.map((p) => ({
       url: `${SITE_URL}/rastvor/${p.slug}`,
+      lastModified: now,
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    })),
+    ...cities.map((c) => ({
+      url: `${SITE_URL}/dostavka/${c.slug}`,
       lastModified: now,
       changeFrequency: 'monthly' as const,
       priority: 0.7,
