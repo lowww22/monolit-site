@@ -1,6 +1,6 @@
-import { Mail, MapPin, Phone } from "lucide-react";
-import ContactForm from "@/components/ContactForm";
-import { site } from "@/lib/site";
+import { Clock, Mail, MapPin, Phone } from 'lucide-react';
+import ContactForm from '@/components/ContactForm';
+import { site } from '@/lib/site';
 
 export default function Contact() {
   return (
@@ -10,10 +10,10 @@ export default function Contact() {
           <div className="p-6 sm:p-8 md:p-12">
             <p className="eyebrow text-orange-400">Контакты</p>
             <h2 className="display mt-3 text-3xl sm:text-4xl md:text-5xl">
-              Закажите бетон для объекта
+              Закажите бетон на объект
             </h2>
             <p className="mt-5 text-white/65 sm:text-lg">
-              Подберём марку, рассчитаем объём и организуем доставку в{" "}
+              Подберём марку, рассчитаем объём и организуем доставку в{' '}
               {site.company.cities}.
             </p>
 
@@ -54,21 +54,32 @@ export default function Contact() {
                 </span>
                 <div>
                   <div className="text-sm text-white/50">Производство</div>
-                  <p className="font-semibold">{site.contacts.addressGlazov}</p>
-                  <p className="text-white/70">{site.contacts.addressIgra}</p>
-                  <p className="mt-1 text-sm text-white/50">
-                    {site.contacts.hours}
-                  </p>
+                  <address className="not-italic">
+                    <p className="font-semibold">
+                      {site.contacts.addressGlazov}
+                    </p>
+                    <p className="text-white/70">{site.contacts.addressIgra}</p>
+                  </address>
+                </div>
+              </li>
+
+              <li className="flex gap-4">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center bg-accent">
+                  <Clock size={18} aria-hidden />
+                </span>
+                <div>
+                  <div className="text-sm text-white/50">Режим работы</div>
+                  <p className="font-semibold">{site.contacts.hours}</p>
                 </div>
               </li>
             </ul>
           </div>
 
-          <div className="bg-panel p-6 text-ink sm:p-8 md:p-12">
-            <h3 className="text-2xl font-semibold">Заявка на звонок</h3>
+          <div id="zayavka" className="bg-panel p-6 text-ink sm:p-8 md:p-12">
+            <h2 className="text-2xl font-semibold">Заявка на звонок</h2>
             <p className="mt-2 text-muted">
-              Оставьте контакты — перезвоним в рабочее время{" "}
-              {site.contacts.hours.replace("Ежедневно ", "")}.
+              Оставьте контакты — перезвоним в рабочее время{' '}
+              {site.contacts.hoursShort}.
             </p>
             <div className="mt-6">
               <ContactForm />

@@ -237,3 +237,205 @@ textarea.field {
     animation: none;
   }
 }
+
+/* ---------- Ссылка «к содержимому» для клавиатуры и скринридеров ---------- */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+}
+
+.skip-link:focus {
+  left: 1rem;
+  top: 1rem;
+  background: var(--accent);
+  color: #fff;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.25rem;
+  font-weight: 600;
+}
+
+/* ---------- Ловушка для спам-ботов: скрыта от людей ---------- */
+.hp-field {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* ---------- Шапка внутренней страницы ---------- */
+.page-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* ---------- Хлебные крошки ---------- */
+.breadcrumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.875rem;
+}
+
+.breadcrumbs li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.breadcrumbs a {
+  color: rgba(255, 255, 255, 0.7);
+  transition: color 0.2s ease;
+}
+
+.breadcrumbs a:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.breadcrumbs__sep {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* ---------- Таблица характеристик ---------- */
+.spec-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+  background: var(--panel);
+}
+
+.spec-table th,
+.spec-table td {
+  border: 1px solid var(--line);
+  padding: 0.75rem 1rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.spec-table tbody th {
+  width: 45%;
+  font-weight: 500;
+  color: var(--muted);
+  background: var(--bg);
+}
+
+.spec-table td {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.spec-table thead th {
+  background: var(--bg-deep);
+  color: #fff;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.spec-table--wide {
+  min-width: 640px;
+}
+
+.spec-table--wide tbody th {
+  width: auto;
+  white-space: nowrap;
+}
+
+/* ---------- Блок вопросов и ответов ---------- */
+.faq-item {
+  padding: 0;
+}
+
+.faq-item summary {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 0;
+  cursor: pointer;
+  list-style: none;
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-item__q {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0;
+}
+
+.faq-item summary:hover .faq-item__q {
+  color: var(--accent);
+}
+
+.faq-item__icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border: 1px solid var(--line);
+  color: var(--accent);
+  font-size: 1.125rem;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+.faq-item[open] .faq-item__icon {
+  transform: rotate(45deg);
+}
+
+.faq-item__a {
+  margin: 0;
+  padding: 0 0 1.5rem;
+  max-width: 62ch;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+/* ---------- Переключатели в калькуляторе ---------- */
+.calc-tab {
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--ink);
+  padding: 0.65rem 1.1rem;
+  border-radius: 0.25rem;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.calc-tab:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.calc-tab.is-active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+/* ---------- Подвал ---------- */
+.footer-heading {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* ---------- Текст статьи ---------- */
+.prose-x h2 {
+  scroll-margin-top: 6rem;
+}

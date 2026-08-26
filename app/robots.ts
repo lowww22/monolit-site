@@ -1,13 +1,19 @@
-import type { MetadataRoute } from "next";
+import type { MetadataRoute } from 'next';
+import { SITE_URL } from '@/lib/seo';
 
-const SITE_URL = "https://lowww22-monolit-site-c958.twc1.net";
-
+/**
+ * robots.txt генерируется из адреса сайта в lib/seo.ts —
+ * менять вручную не нужно.
+ */
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: {
-      userAgent: "*",
-      allow: "/",
-    },
+    rules: [
+      {
+        userAgent: '*',
+        allow: '/',
+        disallow: ['/api/'],
+      },
+    ],
     sitemap: `${SITE_URL}/sitemap.xml`,
     host: SITE_URL,
   };

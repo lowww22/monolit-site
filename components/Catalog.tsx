@@ -1,47 +1,9 @@
-import { site, type Grade } from "@/lib/site";
+import Link from 'next/link';
+import { concrete, mortar } from '@/lib/catalog';
+import ProductGrid from '@/components/ProductGrid';
+import { site } from '@/lib/site';
 
-const concrete = site.grades.filter((item) => item.category === "concrete");
-const mortar = site.grades.filter((item) => item.category === "mortar");
-
-function concreteTitle(item: Grade) {
-  const cls = item.class.replace(/^B/i, "").replace(".", ",");
-  return `В ${cls} (${item.mark})`;
-}
-
-function ProductGrid({ items }: { items: readonly Grade[] }) {
-  return (
-    <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-      {items.map((item) => (
-        <article
-          key={item.grade}
-          className="group flex flex-col border border-line bg-bg p-5 transition hover:-translate-y-0.5 hover:border-accent/50 hover:shadow-md"
-        >
-          <div className="display text-xl leading-tight text-ink sm:text-2xl">
-            {item.category === "concrete" ? concreteTitle(item) : item.name}
-          </div>
-          <p className="mt-3 flex-1 text-sm leading-relaxed text-muted">
-            {item.use}
-          </p>
-          <div className="mt-5 flex items-end justify-between border-t border-line pt-4">
-            <div>
-              <div className="text-xs uppercase tracking-wider text-muted">
-                стоимость
-              </div>
-              <div className="text-sm font-semibold text-ink">по телефону</div>
-            </div>
-            <a
-              href={site.contacts.phoneHref}
-              className="text-sm font-semibold text-accent group-hover:text-accent-hover"
-            >
-              Узнать →
-            </a>
-          </div>
-        </article>
-      ))}
-    </div>
-  );
-}
-
+/** Краткий каталог на главной: ведёт на полные разделы и страницы марок. */
 export default function Catalog() {
   return (
     <section id="catalog" className="section-pad bg-panel">
@@ -53,9 +15,9 @@ export default function Catalog() {
               Товарный бетон всех марок и раствор
             </h2>
             <p className="mt-4 max-w-2xl text-muted sm:text-lg">
-              Производим товарный бетон классов В 7,5–В 40 (М100–М500) и
-              строительный раствор М50–М200. Подберём состав под ваш объект.
-              Цену уточняйте по телефону.
+              Производим товарный бетон М100–М500 (классы В7,5–В40) по ГОСТ
+              26633-2015 и строительный раствор М50–М200. Подберём состав под
+              ваш объект и доставим в Глазов, Игру и районы Удмуртии.
             </p>
           </div>
           <a
@@ -71,9 +33,16 @@ export default function Catalog() {
             Товарный бетон
           </h3>
           <p className="mt-2 text-muted">
-            Класс по прочности (В) и марка (М) — например В 7,5 (М100)
+            Класс по прочности (В) и марка (М) — например, В22,5 соответствует
+            М300
           </p>
-          <ProductGrid items={concrete} />
+          <ProductGrid items={concrete.slice(0, 6)} kind="beton" />
+          <Link
+            href="/beton"
+            className="btn btn-dark mt-6 inline-flex"
+          >
+            Все марки бетона →
+          </Link>
         </div>
 
         <div className="mt-14">
@@ -83,19 +52,14 @@ export default function Catalog() {
           <p className="mt-2 text-muted">
             Марки М50–М200 для кладки, монтажа и отделочных работ
           </p>
-          <ProductGrid items={mortar} />
-        </div>
-
-        <p className="mt-8 text-sm text-muted">
-          Звоните{" "}
-          <a
-            href={site.contacts.phoneHref}
-            className="font-semibold text-accent"
+          <ProductGrid items={mortar.slice(0, 3)} kind="rastvor" />
+          <Link
+            href="/rastvor"
+            className="btn btn-dark mt-6 inline-flex"
           >
-            {site.contacts.phoneDisplay}
-          </a>{" "}
-          · {site.contacts.hours}
-        </p>
+            Все марки раствора →
+          </Link>
+        </div>
       </div>
     </section>
   );

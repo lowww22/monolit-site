@@ -1,6 +1,8 @@
-import Image from "next/image";
-import { site } from "@/lib/site";
-import { photos } from "@/lib/photos";
+import Image from 'next/image';
+import Link from 'next/link';
+import { Phone } from 'lucide-react';
+import { site } from '@/lib/site';
+import { photos } from '@/lib/photos';
 
 export default function Hero() {
   return (
@@ -10,9 +12,10 @@ export default function Hero() {
     >
       <Image
         src={photos.hero}
-        alt="Заливка бетона на строительном объекте"
+        alt="Заливка товарного бетона на строительном объекте в Глазове"
         fill
         priority
+        fetchPriority="high"
         sizes="100vw"
         className="object-cover"
       />
@@ -31,25 +34,34 @@ export default function Hero() {
           {site.company.legalName} · {site.company.cities}
         </p>
 
-        <h1 className="display animate-rise-delay mt-4 max-w-4xl text-5xl text-white sm:text-6xl md:text-7xl lg:text-8xl">
-          {site.hero.title}
+        {/*
+          H1 содержит основной поисковый запрос «купить бетон в Глазове».
+          Раньше здесь стояло просто «МОНОЛИТ» — поисковики не понимали,
+          о чём страница.
+        */}
+        <h1 className="display animate-rise-delay mt-4 max-w-4xl text-4xl text-white sm:text-5xl md:text-6xl lg:text-7xl">
+          {site.hero.h1}
         </h1>
 
-        <p className="animate-rise-delay mt-3 max-w-2xl text-lg font-medium text-white/90 sm:text-xl md:text-2xl">
+        <p className="animate-rise-delay mt-4 max-w-2xl text-lg font-medium text-white/90 sm:text-xl md:text-2xl">
           {site.hero.subtitle}
         </p>
 
-        <p className="animate-rise-delay-2 mt-5 max-w-xl text-base leading-relaxed text-white/70 sm:text-lg">
+        <p className="animate-rise-delay-2 mt-5 max-w-2xl text-base leading-relaxed text-white/70 sm:text-lg">
           {site.hero.text}
         </p>
 
         <div className="animate-rise-delay-2 mt-8 flex flex-col gap-3 sm:flex-row">
-          <a href="#contacts" className="btn btn-primary">
-            Заявка на звонок
-          </a>
-          <a href={site.contacts.phoneHref} className="btn btn-ghost">
+          <a href={site.contacts.phoneHref} className="btn btn-primary">
+            <Phone size={16} className="mr-2" aria-hidden />
             {site.contacts.phoneDisplay}
           </a>
+          <Link href="/kontakty#zayavka" className="btn btn-ghost">
+            Заявка на звонок
+          </Link>
+          <Link href="/kalkulyator" className="btn btn-ghost">
+            Рассчитать объём
+          </Link>
         </div>
 
         <div className="mt-12 grid grid-cols-2 gap-3 border-t border-white/15 pt-8 sm:grid-cols-4 sm:gap-6">
