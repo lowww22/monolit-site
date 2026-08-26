@@ -38,8 +38,9 @@ jobs:
       - name: Build static site
         env:
           STATIC_EXPORT: "1"
-          NEXT_PUBLIC_BASE_PATH: /monolit-site
-          NEXT_PUBLIC_SITE_URL: https://lowww22.github.io/monolit-site
+          # Сайт живёт в корне своего домена, подпапка не нужна —
+          # иначе ломаются пути к фотографиям.
+          NEXT_PUBLIC_SITE_URL: https://monolit-glazovbeton.ru
         run: npm run build
 
       - name: Disable Jekyll processing
