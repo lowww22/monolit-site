@@ -2,6 +2,9 @@
 
 import { useRef, useState } from 'react';
 import { concrete, mortar } from '@/lib/catalog';
+import { site } from '@/lib/site';
+
+const MAIL = site.contacts.email;
 
 type Status = 'idle' | 'loading' | 'success' | 'error';
 
@@ -41,10 +44,35 @@ export default function ContactForm() {
 
       setStatus('success');
       form.reset();
-    } catch (err) {
-      setStatus('error');
-      setError(err instanceof Error ? err.message : 'Ошибка отправки');
+    } catch {
+      // На статической версии сайта серверного обработчика нет —
+      // тогда открываем письмо с теми же данными.
+      sendByMail(data);
+      setStatus('success');
+      form.reset();
     }
+  }
+
+  /** Запасной путь: собрать письмо и открыть почтовую программу */
+  function sendByMail(data: FormData) {
+    const text = [
+      'Заявка с сайта Монолит',
+      '',
+      `Имя: ${data.get('name') || ''}`,
+      `Телефон: ${data.get('phone') || ''}`,
+      data.get('email') ? `Email: ${data.get('email')}` : null,
+      data.get('grade') ? `Продукция: ${data.get('grade')}` : null,
+      data.get('volume') ? `Объём: ${data.get('volume')} м³` : null,
+      data.get('message') ? `Комментарий: ${data.get('message')}` : null,
+    ]
+      .filter(Boolean)
+      .join('\n');
+
+    const url = `mailto:${MAIL}?subject=${encodeURIComponent(
+      'Заявка с сайта',
+    )}&body=${encodeURIComponent(text)}`;
+
+    window.location.href = url;
   }
 
   if (status === 'success') {

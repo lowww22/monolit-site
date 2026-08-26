@@ -1,6 +1,9 @@
 import type { MetadataRoute } from 'next';
 import { SITE_URL } from '@/lib/seo';
 
+/** Файл всегда одинаковый — генерируем его один раз при сборке */
+export const dynamic = 'force-static';
+
 /**
  * robots.txt генерируется из адреса сайта в lib/seo.ts —
  * менять вручную не нужно.

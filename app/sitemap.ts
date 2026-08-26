@@ -3,6 +3,9 @@ import { SITE_URL } from '@/lib/seo';
 import { concrete, mortar } from '@/lib/catalog';
 import { articles } from '@/lib/articles';
 
+/** Карта сайта собирается один раз при сборке */
+export const dynamic = 'force-static';
+
 /**
  * Карта сайта. Собирается автоматически из каталога и статей —
  * при добавлении новой марки или статьи она попадает сюда сама.
