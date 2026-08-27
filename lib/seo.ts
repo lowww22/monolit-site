@@ -34,6 +34,6 @@ export const OG_IMAGE = {
 
 /** Коды подтверждения прав в панелях вебмастеров */
 export const VERIFICATION = {
-  yandex: '2e70f6fef041f257',
+  yandex: '8422a70ebbe149bc',
   google: 'google53220b585c70e120.html',
 };
