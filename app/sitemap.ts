@@ -13,6 +13,13 @@ export const dynamic = 'force-static';
  * Адрес: /sitemap.xml — его нужно указать в Яндекс.Вебмастере
  * и Google Search Console.
  */
+/**
+ * Адрес страницы со слэшем на конце.
+ * Именно так страницы отдаются на сайте — без слэша идёт редирект,
+ * а редиректы в карте сайта замедляют обход поисковым роботом.
+ */
+const url = (path: string) => `${SITE_URL}${path === '/' ? '/' : `${path}/`}`;
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
 
@@ -37,31 +44,31 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     ...staticPages.map((p) => ({
-      url: `${SITE_URL}${p.path}`,
+      url: url(p.path),
       lastModified: now,
       changeFrequency: p.freq,
       priority: p.priority,
     })),
     ...concrete.map((p) => ({
-      url: `${SITE_URL}/beton/${p.slug}`,
+      url: url(`/beton/${p.slug}`),
       lastModified: now,
       changeFrequency: 'monthly' as const,
       priority: 0.8,
     })),
     ...mortar.map((p) => ({
-      url: `${SITE_URL}/rastvor/${p.slug}`,
+      url: url(`/rastvor/${p.slug}`),
       lastModified: now,
       changeFrequency: 'monthly' as const,
       priority: 0.7,
     })),
     ...cities.map((c) => ({
-      url: `${SITE_URL}/dostavka/${c.slug}`,
+      url: url(`/dostavka/${c.slug}`),
       lastModified: now,
       changeFrequency: 'monthly' as const,
       priority: 0.7,
     })),
     ...articles.map((a) => ({
-      url: `${SITE_URL}/stati/${a.slug}`,
+      url: url(`/stati/${a.slug}`),
       lastModified: new Date(a.date),
       changeFrequency: 'monthly' as const,
       priority: 0.6,
