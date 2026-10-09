@@ -61,3 +61,26 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+
+  # После публикации сообщаем Яндексу адреса всех страниц по протоколу
+  # IndexNow — так новые и изменённые страницы попадают в поиск быстрее.
+  # Если Яндекс не ответит, на сам сайт это никак не влияет.
+  indexnow:
+    needs: deploy
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - name: Send page URLs to Yandex IndexNow
+        env:
+          HOST: monolit-glazovbeton.ru
+          KEY: 5b6096476e43430691dbf2a8c671ed8f
+        run: |
+          # Даём новой версии сайта разойтись по серверам GitHub Pages
+          sleep 60
+          curl -fsS "https://$HOST/sitemap.xml" -o sitemap.xml
+          URLS=$(grep -o '<loc>[^<]*</loc>' sitemap.xml | sed -e 's/<loc>//' -e 's/<\/loc>//' | jq -R . | jq -s -c .)
+          BODY=$(jq -n -c --arg host "$HOST" --arg key "$KEY" --argjson urls "$URLS" \
+            '{host: $host, key: $key, keyLocation: ("https://" + $host + "/" + $key + ".txt"), urlList: $urls}')
+          curl -sS -X POST "https://yandex.com/indexnow" \
+            -H "Content-Type: application/json; charset=utf-8" \
+            -d "$BODY" -w "\nHTTP %{http_code}\n"
