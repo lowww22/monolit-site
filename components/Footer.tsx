@@ -136,6 +136,12 @@ export default function Footer() {
       <div className="border-t border-white/10 px-4 py-5 text-center text-sm text-white/40">
         © {new Date().getFullYear()} {site.company.legalName}. Бетон, раствор,
         цемент и щебень в Глазове и Игре.
+        {site.requisites.inn && (
+          <span className="mt-1 block">
+            ИНН {site.requisites.inn}
+            {site.requisites.ogrn && `, ОГРН ${site.requisites.ogrn}`}
+          </span>
+        )}
       </div>
     </footer>
   );

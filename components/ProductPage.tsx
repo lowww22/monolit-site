@@ -32,7 +32,11 @@ export default function ProductPage({
     (p) => p.slug !== product.slug,
   );
 
-  /* Микроразметка товара — даёт расширенный сниппет в выдаче */
+  /*
+   * Микроразметка товара — даёт расширенный сниппет с ценой в выдаче.
+   * Выводится только вместе с ценами: товар без цены поисковики
+   * считают ошибкой разметки (в Вебмастере и Search Console это видно).
+   */
   const productJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Product',
@@ -93,7 +97,9 @@ export default function ProductPage({
   const faq: Faq[] = [
     {
       q: `Сколько стоит куб бетона ${product.mark} в Глазове?`,
-      a: `Стоимость ${label.toLowerCase()}а ${product.mark} зависит от объёма заказа и расстояния доставки. Актуальную цену на сегодня назовёт менеджер по телефону ${site.contacts.phoneDisplay} — расчёт делаем сразу вместе с доставкой на ваш адрес.`,
+      a: site.showPrices
+        ? `${label} ${product.mark} — от ${product.price.toLocaleString('ru-RU')} ₽ за 1 м³ без доставки. Стоимость доставки зависит от объёма и расстояния до объекта: менеджер посчитает её по телефону ${site.contacts.phoneDisplay}.`
+        : `Стоимость ${label.toLowerCase()}а ${product.mark} зависит от объёма заказа и расстояния доставки. Актуальную цену на сегодня назовёт менеджер по телефону ${site.contacts.phoneDisplay} — расчёт делаем сразу вместе с доставкой на ваш адрес.`,
     },
     ...(isConcrete
       ? [
@@ -115,7 +121,7 @@ export default function ProductPage({
 
   return (
     <>
-      <JsonLd data={productJsonLd} />
+      {site.showPrices && <JsonLd data={productJsonLd} />}
 
       <PageHeader
         crumbs={[

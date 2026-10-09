@@ -5,8 +5,9 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import FloatingCall from '@/components/FloatingCall';
 import JsonLd from '@/components/JsonLd';
+import Metrika from '@/components/Metrika';
 import { site } from '@/lib/site';
-import { SITE_URL, abs, OG_IMAGE, VERIFICATION } from '@/lib/seo';
+import { SITE_URL, abs, OG_IMAGE, VERIFICATION, BRAND } from '@/lib/seo';
 
 const display = Oswald({
   subsets: ['latin', 'cyrillic'],
@@ -25,9 +26,10 @@ const sans = Manrope({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default:
-      'Купить бетон в Глазове — цена за куб с доставкой | ООО «Монолит»',
-    template: '%s | ООО «Монолит» Глазов',
+    default: `Купить бетон в Глазове и Игре с доставкой | ${BRAND}`,
+    // Название компании добавляется к заголовку каждой страницы здесь,
+    // поэтому в заголовках самих страниц его не повторяем
+    template: `%s | ${BRAND}`,
   },
   description:
     'Купить бетон в Глазове и Игре от производителя. Товарный бетон М100–М500 и раствор М50–М200 по ГОСТ, доставка миксером по Удмуртии. Крупнейший завод Глазовского района, до 200 м³/час. Звоните: +7 (912) 850-17-11.',
@@ -209,6 +211,7 @@ export default function RootLayout({
         <main id="content">{children}</main>
         <Footer />
         <FloatingCall />
+        <Metrika />
       </body>
     </html>
   );

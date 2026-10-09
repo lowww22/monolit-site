@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import ProductPage from '@/components/ProductPage';
 import { mortar, getProduct } from '@/lib/catalog';
 import { abs } from '@/lib/seo';
+import { site } from '@/lib/site';
 
 export function generateStaticParams() {
   return mortar.map((p) => ({ slug: p.slug }));
@@ -19,7 +20,9 @@ export async function generateMetadata({
   const product = getProduct('rastvor', slug);
   if (!product) return {};
 
-  const title = `Раствор ${product.mark} в Глазове — цена за куб, характеристики`;
+  const title = site.showPrices
+    ? `Раствор ${product.mark} в Глазове — цена за куб`
+    : `Раствор ${product.mark} в Глазове и Игре с доставкой`;
   const description = `Купить строительный раствор ${product.mark} в Глазове и Игре. Прочность ${product.strength}, морозостойкость ${product.frost}, ГОСТ 28013-98. ${product.short}. Доставка по Удмуртии.`;
 
   return {

@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import ProductPage from '@/components/ProductPage';
 import { concrete, getProduct } from '@/lib/catalog';
 import { abs } from '@/lib/seo';
+import { site } from '@/lib/site';
 
 /** Страницы всех марок собираются заранее — открываются мгновенно */
 export function generateStaticParams() {
@@ -20,7 +21,9 @@ export async function generateMetadata({
   const product = getProduct('beton', slug);
   if (!product) return {};
 
-  const title = `Бетон ${product.mark} (${product.cls}) в Глазове — цена за куб, характеристики`;
+  const title = site.showPrices
+    ? `Бетон ${product.mark} (${product.cls}) в Глазове — цена за куб`
+    : `Бетон ${product.mark} (${product.cls}) в Глазове и Игре с доставкой`;
   const description = `Купить бетон ${product.mark} класса ${product.cls} в Глазове и Игре. Прочность ${product.strength}, морозостойкость ${product.frost}, ГОСТ 26633-2015. ${product.short}. Доставка миксером по Удмуртии.`;
 
   return {

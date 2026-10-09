@@ -3,24 +3,48 @@
 import { useRef, useState } from 'react';
 import { concrete, mortar } from '@/lib/catalog';
 import { site } from '@/lib/site';
+import { reachGoal } from '@/components/Metrika';
 
 const MAIL = site.contacts.email;
 
-type Status = 'idle' | 'loading' | 'success' | 'error';
+/**
+ * idle — форма; loading — отправка; success — заявка ушла на сервер;
+ * manual — сервера для заявок нет (сайт на статическом хостинге) или он
+ * не ответил: тогда честно показываем собранную заявку и способы её
+ * отправить, а не пишем «принята», когда она никуда не ушла.
+ */
+type Status = 'idle' | 'loading' | 'success' | 'manual';
+
+/** Текст заявки — для письма, мессенджера и копирования */
+function buildText(data: FormData) {
+  return [
+    'Заявка с сайта Монолит',
+    '',
+    `Имя: ${data.get('name') || ''}`,
+    `Телефон: ${data.get('phone') || ''}`,
+    data.get('email') ? `Email: ${data.get('email')}` : null,
+    data.get('grade') ? `Продукция: ${data.get('grade')}` : null,
+    data.get('volume') ? `Объём: ${data.get('volume')} м³` : null,
+    data.get('message') ? `Комментарий: ${data.get('message')}` : null,
+  ]
+    .filter(Boolean)
+    .join('\n');
+}
 
 export default function ContactForm() {
   const [status, setStatus] = useState<Status>('idle');
-  const [error, setError] = useState('');
+  const [manualText, setManualText] = useState('');
+  const [copied, setCopied] = useState(false);
   // Момент открытия формы — боты отправляют её почти мгновенно
   const openedAt = useRef(Date.now());
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setStatus('loading');
-    setError('');
 
     const form = e.currentTarget;
     const data = new FormData(form);
+    reachGoal('lead_form');
 
     try {
       const res = await fetch('/api/contact', {
@@ -45,34 +69,80 @@ export default function ContactForm() {
       setStatus('success');
       form.reset();
     } catch {
-      // На статической версии сайта серверного обработчика нет —
-      // тогда открываем письмо с теми же данными.
-      sendByMail(data);
-      setStatus('success');
-      form.reset();
+      // Заявка не дошла до сервера — даём отправить её самому
+      setManualText(buildText(data));
+      setCopied(false);
+      setStatus('manual');
     }
   }
 
-  /** Запасной путь: собрать письмо и открыть почтовую программу */
-  function sendByMail(data: FormData) {
-    const text = [
-      'Заявка с сайта Монолит',
-      '',
-      `Имя: ${data.get('name') || ''}`,
-      `Телефон: ${data.get('phone') || ''}`,
-      data.get('email') ? `Email: ${data.get('email')}` : null,
-      data.get('grade') ? `Продукция: ${data.get('grade')}` : null,
-      data.get('volume') ? `Объём: ${data.get('volume')} м³` : null,
-      data.get('message') ? `Комментарий: ${data.get('message')}` : null,
-    ]
-      .filter(Boolean)
-      .join('\n');
+  function copyText() {
+    navigator.clipboard
+      ?.writeText(manualText)
+      .then(() => setCopied(true))
+      .catch(() => setCopied(false));
+  }
 
-    const url = `mailto:${MAIL}?subject=${encodeURIComponent(
+  if (status === 'manual') {
+    const mailHref = `mailto:${MAIL}?subject=${encodeURIComponent(
       'Заявка с сайта',
-    )}&body=${encodeURIComponent(text)}`;
+    )}&body=${encodeURIComponent(manualText)}`;
+    const wa = site.messengers.whatsapp;
 
-    window.location.href = url;
+    return (
+      <div className="border border-line bg-bg p-6 sm:p-8">
+        <h3 className="text-xl font-semibold text-ink">
+          Осталось отправить заявку
+        </h3>
+        <p className="mt-2 text-muted">
+          Заявка собрана. Выберите удобный способ — быстрее всего позвонить.
+        </p>
+
+        <div className="mt-5 grid gap-3">
+          <a href={site.contacts.phoneHref} className="btn btn-primary w-full">
+            Позвонить {site.contacts.phoneDisplay}
+          </a>
+          {wa && (
+            <a
+              href={`https://wa.me/${wa}?text=${encodeURIComponent(manualText)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-dark w-full"
+            >
+              Отправить в WhatsApp
+            </a>
+          )}
+          <a
+            href={mailHref}
+            className="btn w-full border border-line bg-panel text-ink hover:border-accent"
+          >
+            Отправить письмом на {MAIL}
+          </a>
+          <button
+            type="button"
+            onClick={copyText}
+            className="btn w-full border border-line bg-panel text-ink hover:border-accent"
+          >
+            {copied ? 'Текст скопирован' : 'Скопировать текст заявки'}
+          </button>
+        </div>
+
+        <pre className="mt-5 whitespace-pre-wrap break-words border border-line bg-panel p-4 font-sans text-sm text-muted">
+          {manualText}
+        </pre>
+
+        <button
+          type="button"
+          className="mt-5 text-sm font-semibold text-accent"
+          onClick={() => {
+            openedAt.current = Date.now();
+            setStatus('idle');
+          }}
+        >
+          ← Заполнить заново
+        </button>
+      </div>
+    );
   }
 
   if (status === 'success') {
@@ -188,12 +258,6 @@ export default function ContactForm() {
           rows={3}
         />
       </label>
-
-      {status === 'error' && (
-        <p role="alert" className="bg-red-50 px-4 py-3 text-sm text-red-700">
-          {error}
-        </p>
-      )}
 
       <button
         type="submit"

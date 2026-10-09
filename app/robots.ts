@@ -18,6 +18,7 @@ export default function robots(): MetadataRoute.Robots {
       },
     ],
     sitemap: `${SITE_URL}/sitemap.xml`,
-    host: SITE_URL,
+    // Директиву Host Яндекс больше не читает: главный адрес сайта
+    // он определяет по редиректам и canonical, поэтому её здесь нет.
   };
 }

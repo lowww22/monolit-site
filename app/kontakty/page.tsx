@@ -6,12 +6,12 @@ import { site } from '@/lib/site';
 import { abs } from '@/lib/seo';
 
 export const metadata: Metadata = {
-  title: 'Контакты ООО «Монолит» — бетонный завод в Глазове и Игре',
+  title: 'Контакты бетонного завода в Глазове и Игре',
   description:
     'Контакты бетонного завода ООО «Монолит»: г. Глазов, ул. Юкаменская, 29 и Игринский район, д. Сундур, ул. Производственная, 4. Телефон +7 (912) 850-17-11, работаем ежедневно 8:00–18:00.',
   alternates: { canonical: '/kontakty' },
   openGraph: {
-    title: 'Контакты ООО «Монолит» — Глазов и Игра',
+    title: 'Контакты «Монолит» — бетонный завод в Глазове и Игре',
     description:
       'Две производственные площадки, телефон и форма заявки. Работаем ежедневно 8:00–18:00.',
     url: abs('/kontakty'),
@@ -24,12 +24,14 @@ const places = [
     address: site.contacts.addressGlazov,
     note: 'Основной завод. Отгрузка бетона и раствора, приём вагонов и выгрузка щебня.',
     zones: 'Глазов, Глазовский район, Балезино, Яр, Юкаменское',
+    map: site.maps.glazov,
   },
   {
     city: 'Игринский район',
     address: site.contacts.addressIgra,
     note: 'Вторая производственная площадка в д. Сундур. Отгрузка на объекты Игры и района.',
     zones: 'Игра, Игринский район, Кез, Дебёсы',
+    map: site.maps.igra,
   },
 ];
 
@@ -113,9 +115,35 @@ export default function KontaktyPage() {
                 <p className="mt-4 text-sm text-muted">
                   <strong className="text-ink">Доставка:</strong> {p.zones}
                 </p>
+                <div className="mt-5 flex flex-wrap gap-3">
+                  <a
+                    href={p.map.open}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-dark"
+                  >
+                    <MapPin size={16} aria-hidden className="mr-2" />
+                    Открыть на карте
+                  </a>
+                  <a
+                    href={p.map.route}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn border border-line bg-panel text-ink hover:border-accent"
+                  >
+                    Проложить маршрут
+                  </a>
+                </div>
               </article>
             ))}
           </div>
+
+          {site.requisites.inn && (
+            <p className="mt-8 text-sm text-muted">
+              {site.company.legalName}, ИНН {site.requisites.inn}
+              {site.requisites.ogrn && `, ОГРН ${site.requisites.ogrn}`}
+            </p>
+          )}
         </div>
       </section>
 

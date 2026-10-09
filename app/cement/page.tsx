@@ -5,46 +5,26 @@ import { Check } from 'lucide-react';
 import PageHeader from '@/components/PageHeader';
 import CtaBand from '@/components/CtaBand';
 import FaqSection from '@/components/FaqSection';
-import JsonLd from '@/components/JsonLd';
 import { photos } from '@/lib/photos';
 import { faqCement } from '@/lib/faq';
-import { abs, SITE_URL } from '@/lib/seo';
+import { abs } from '@/lib/seo';
 
 export const metadata: Metadata = {
-  title: 'Купить цемент в Глазове и Игре — продажа цемента с доставкой',
+  title: 'Цемент в Глазове и Игре — продажа с доставкой',
   description:
     'Продажа цемента в Глазове и Игре: портландцемент ПЦ400 и ПЦ500 для фундамента, кладки и стяжек. Подберём марку под задачу, организуем поставку. Тел. +7 (912) 850-17-11.',
   alternates: { canonical: '/cement' },
   openGraph: {
-    title: 'Купить цемент в Глазове — ООО «Монолит»',
+    title: 'Цемент в Глазове и Игре — «Монолит»',
     description:
       'Продажа цемента разных марок с доставкой по Глазову, Игре и районам Удмуртии.',
     url: abs('/cement'),
   },
 };
 
-const productJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'Product',
-  name: 'Цемент',
-  description:
-    'Портландцемент марок ПЦ400 и ПЦ500 для приготовления бетона, кладочных растворов и стяжек. Продажа в Глазове и Игре.',
-  category: 'Строительные материалы',
-  manufacturer: { '@id': `${SITE_URL}/#organization` },
-  offers: {
-    '@type': 'Offer',
-    url: abs('/cement'),
-    priceCurrency: 'RUB',
-    availability: 'https://schema.org/InStock',
-    seller: { '@id': `${SITE_URL}/#organization` },
-  },
-};
-
 export default function CementPage() {
   return (
     <>
-      <JsonLd data={productJsonLd} />
-
       <PageHeader
         crumbs={[{ name: 'Цемент' }]}
         h1="Купить цемент в Глазове и Игре"

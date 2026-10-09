@@ -28,8 +28,10 @@ export async function generateMetadata({
   const c = getCity(city);
   if (!c) return {};
 
-  const title = `Купить бетон ${c.inCity} с доставкой — цена за куб | ООО «Монолит»`;
-  const description = `Доставка товарного бетона и раствора ${c.inCity} и по ${c.district}. Марки М100–М500 по ГОСТ, отгрузка от 1 м³, собственные миксеры. Тел. ${site.contacts.phoneDisplay}.`;
+  const title = site.showPrices
+    ? `Бетон ${c.inCity} — цена за куб с доставкой`
+    : `Купить бетон ${c.inCity} с доставкой от завода`;
+  const description = `Доставка товарного бетона и раствора ${c.inCity} и ${c.overDistrict}. Марки М100–М500 по ГОСТ, отгрузка от 1 м³, собственные миксеры. Тел. ${site.contacts.phoneDisplay}.`;
 
   return {
     title,
@@ -80,7 +82,7 @@ export default async function Page({
       { '@type': 'Place', name: c.district },
     ],
     url: abs(`/dostavka/${c.slug}`),
-    description: `Доставка товарного бетона марок М100–М500 и строительного раствора ${c.inCity} и по ${c.district}.`,
+    description: `Доставка товарного бетона марок М100–М500 и строительного раствора ${c.inCity} и ${c.overDistrict}.`,
   };
 
   return (
@@ -93,7 +95,7 @@ export default async function Page({
           { name: c.name },
         ]}
         h1={`Купить бетон ${c.inCity} с доставкой`}
-        lead={`Возим товарный бетон марок М100–М500 и строительный раствор ${c.inCity} и по ${c.district}. Работаем ежедневно ${site.contacts.hoursShort}, отгружаем от 1 м³.`}
+        lead={`Возим товарный бетон марок М100–М500 и строительный раствор ${c.inCity} и ${c.overDistrict}. Работаем ежедневно ${site.contacts.hoursShort}, отгружаем от 1 м³.`}
       />
 
       <section className="section-pad bg-panel">

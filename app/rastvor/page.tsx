@@ -6,14 +6,17 @@ import CtaBand from '@/components/CtaBand';
 import JsonLd from '@/components/JsonLd';
 import { mortar } from '@/lib/catalog';
 import { abs } from '@/lib/seo';
+import { site } from '@/lib/site';
 
 export const metadata: Metadata = {
-  title: 'Строительный раствор М50–М200 в Глазове и Игре — цены, доставка',
+  title: site.showPrices
+    ? 'Раствор М50–М200 в Глазове и Игре — цены за куб'
+    : 'Строительный раствор М50–М200 в Глазове и Игре',
   description:
     'Купить строительный раствор в Глазове и Игре от производителя: кладочный, штукатурный, для стяжек. Марки М50, М75, М100, М150, М200 по ГОСТ 28013-98. Доставка по Удмуртии.',
   alternates: { canonical: '/rastvor' },
   openGraph: {
-    title: 'Строительный раствор М50–М200 в Глазове — ООО «Монолит»',
+    title: 'Строительный раствор М50–М200 в Глазове и Игре — «Монолит»',
     description:
       'Кладочный и штукатурный раствор всех марок с доставкой по Глазову, Игре и районам Удмуртии.',
     url: abs('/rastvor'),
