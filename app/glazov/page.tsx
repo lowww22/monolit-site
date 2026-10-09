@@ -82,6 +82,24 @@ export default function GlazovPage() {
                 <div>
                   <h3 className="font-semibold text-ink">Адрес завода</h3>
                   <p className="text-muted">{site.contacts.addressGlazov}</p>
+                  <p className="mt-1 flex flex-wrap gap-x-4 text-sm font-semibold">
+                    <a
+                      href={site.maps.glazov.open}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-accent hover:underline"
+                    >
+                      Открыть на карте
+                    </a>
+                    <a
+                      href={site.maps.glazov.route}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-accent hover:underline"
+                    >
+                      Маршрут
+                    </a>
+                  </p>
                 </div>
               </li>
               <li className="flex gap-4">
